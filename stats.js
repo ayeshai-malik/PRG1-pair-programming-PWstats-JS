@@ -9,16 +9,28 @@ function deleteExistingOutputFile() {
     fs.unlinkSync(outputFile);
   }
 }
+// const count = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+const count = Array(21).fill(0);
+
 
 function processData() {
   const data = fs.readFileSync(inputFile, "utf-8");
   const lines = data.split(/\n/);
-
-  for (line of lines) {
+  
+  for (let line of lines) {
     elements = line.split(delimiter);
-    console.log(elements);
+    
+    count[elements[1].length] += 1;
+    
   }
+  
+  for (let i = 0; i <= count.length -1; i++) {
+    fs.appendFileSync(outputFile, `Chars: ${i}, Count: ${count[i]}\n`, "utf-8");
+  }
+
+
 }
+
 
 // Main execution
 deleteExistingOutputFile(); 
